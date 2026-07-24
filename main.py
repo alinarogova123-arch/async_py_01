@@ -91,8 +91,11 @@ def draw(canvas):
         ship = my_file.read()
     ship_slides = ship.split("\n\n")
     
-    coroutine_ship = animate_spaceship(canvas, height // 2, width // 2 - 2, ship_slides)
-    coroutine_fire = fire(canvas, height // 2, width // 2)
+    center_row = height // 2
+    center_column_ship = width // 2 - 2
+    center_colunn_fire = width // 2
+    coroutine_ship = animate_spaceship(canvas, center_row, center_column_ship, ship_slides)
+    coroutine_fire = fire(canvas, center_row, center_colunn_fire)
     coroutines = [coroutine_fire, coroutine_ship]
     
     for i in range(160):
@@ -102,8 +105,10 @@ def draw(canvas):
             random.randint(0, 5),
             random.randint(0, 3),
         ]
-        row = random.randint(1, height - 2)
-        column = random.randint(1, width - 2)
+        max_row = height - 2
+        max_column = width - 2
+        row = random.randint(1, max_row)
+        column = random.randint(1, max_column)
         star = random.choice('+*.:')
         coroutines.append(blink(canvas, row, column, offset_tics, star))
 
