@@ -74,8 +74,10 @@ async def animate_spaceship(canvas, row, column, ship_slides):
         column = max(column, 3)
         
         curses_tools.draw_frame(canvas, row, column, slide)
-        for i in range(2):
-            await asyncio.sleep(0)
+        await asyncio.sleep(0)
+        curses_tools.draw_frame(canvas, row, column, slide, True)
+        curses_tools.draw_frame(canvas, row, column, slide)
+        await asyncio.sleep(0)
         curses_tools.draw_frame(canvas, row, column, slide, True)
 
 
