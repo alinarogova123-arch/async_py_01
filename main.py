@@ -11,22 +11,22 @@ import curses_tools
 TIC_TIMEOUT = 0.1
 
 
-async def blink(canvas, row, column, symbol='*'):
+async def blink(canvas, row, column, offset_tics, symbol='*'):
     while True:
         canvas.addstr(row, column, symbol, curses.A_DIM)
-        for i in range(random.randint(0, 20)):
+        for i in range(offset_tics[0]):
             await asyncio.sleep(0)
 
         canvas.addstr(row, column, symbol)
-        for i in range(random.randint(0, 3)):
+        for i in range(offset_tics[1]):
             await asyncio.sleep(0)
 
         canvas.addstr(row, column, symbol, curses.A_BOLD)
-        for i in range(random.randint(0, 5)):
+        for i in range(offset_tics[2]):
             await asyncio.sleep(0)
 
         canvas.addstr(row, column, symbol)
-        for i in range(random.randint(0, 3)):
+        for i in range(offset_tics[3]):
             await asyncio.sleep(0)
 
 
@@ -94,10 +94,16 @@ def draw(canvas):
     coroutines = [coroutine_fire, coroutine_ship]
     
     for i in range(160):
+        offset_tics = [
+            random.randint(0, 20),
+            random.randint(0, 3),
+            random.randint(0, 5),
+            random.randint(0, 3),
+        ]
         row = random.randint(1, height - 2)
         column = random.randint(1, width - 2)
         star = random.choice('+*.:')
-        coroutines.append(blink(canvas, row, column, star))
+        coroutines.append(blink(canvas, row, column, offset_tics, star))
 
     while True:
         for coroutine in coroutines.copy():
