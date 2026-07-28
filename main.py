@@ -105,9 +105,9 @@ async def animate_spaceship(canvas, row, column, ship_slides, game_over):
 
         for obstacle in OBSTACLES:
             crash = obstacles.has_collision(
-                (obstacle.get_bounding_box_corner_pos()),   # верхний левый угол препятствия
-                (obstacle.rows_size, obstacle.columns_size),     # размер препятствия
-                (row, column),   # верхний левый угол второго объекта
+                (obstacle.get_bounding_box_corner_pos()),
+                (obstacle.rows_size, obstacle.columns_size),
+                (row, column),
             )
             if crash:
                 row = height / 2 - 2
