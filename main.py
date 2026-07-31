@@ -7,7 +7,7 @@ import curses
 
 import curses_tools
 import physics
-import obstacles
+from obstacles import Obstacle, has_collision
 import explosion
 import game_scenario
 
@@ -101,7 +101,7 @@ async def animate_spaceship(canvas, row, column, ship_slides, game_over):
             coroutines.append(fire(canvas, row, column_fire))
 
         for obstacle in obstacles:
-            crash = obstacles.has_collision(
+            crash = has_collision(
                 (obstacle.get_bounding_box_corner_pos()),
                 (obstacle.rows_size, obstacle.columns_size),
                 (row, column),
@@ -112,9 +112,6 @@ async def animate_spaceship(canvas, row, column, ship_slides, game_over):
                 await show_gameover(canvas, row, column, game_over)
                 return
         
-        curses_tools.draw_frame(canvas, row, column, slide)
-        await sleep()
-        curses_tools.draw_frame(canvas, row, column, slide, True)
         curses_tools.draw_frame(canvas, row, column, slide)
         await sleep()
         curses_tools.draw_frame(canvas, row, column, slide, True)
@@ -132,7 +129,7 @@ async def fly_garbage(canvas, column, garbage_frame, speed=0.5):
     row_size, column_size = curses_tools.get_frame_size(garbage_frame)
 
     while row < rows_number:
-        obstacle = obstacles.Obstacle(row, column, row_size, column_size)
+        obstacle = Obstacle(row, column, row_size, column_size)
         obstacles.append(obstacle)
         curses_tools.draw_frame(canvas, row, column, garbage_frame)
         await sleep()
