@@ -15,11 +15,8 @@ import game_scenario
 TIC_TIMEOUT = 0.1
 
 coroutines = []
-
 obstacles = []
-
 obstacles_in_last_collisions = set()
-
 year = 1957
 
 
